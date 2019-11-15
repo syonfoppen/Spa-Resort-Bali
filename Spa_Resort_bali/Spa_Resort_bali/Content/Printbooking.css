@@ -1,0 +1,9 @@
+﻿@font-face {
+    font-family: "Tahu";
+    src: url("/Content/fonts/Tahu_2.ttf");
+}
+
+h1 {
+    font-family: Tahu;
+    font-size: 100px;
+}

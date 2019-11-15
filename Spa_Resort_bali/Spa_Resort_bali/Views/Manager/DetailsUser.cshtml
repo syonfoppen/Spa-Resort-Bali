@@ -1,0 +1,176 @@
+﻿@model Spa_Resort_bali.Models.AspNetUsers
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="card" style="margin-top: 160px; margin-bottom: 100px">
+        <div class="card-body">
+            <h2 style="color:#007BFF">Details User: @Model.UserName #@Model.ClientNumber</h2>
+            <hr />
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>User Info</h4>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                Client Number:
+                            </div>
+                            <div class="col-sm-6">
+                                #@Model.ClientNumber
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                Name:
+                            </div>
+                            <div class="col-sm-6">
+                                @Model.Firstname @Model.Lastname
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                Email:
+                            </div>
+                            <div class="col-sm-6">
+                                @Model.Email
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                Date of birth:
+                            </div>
+                            <div class="col-sm-6">
+                                @DateTime.Parse(Model.DateOfBirth.ToString()).ToString("yyyy-dd-MM")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                PhoneNumber:
+                            </div>
+                            <div class="col-sm-6">
+                                @Model.PhoneNumber
+                            </div>
+                        </div>
+                        <br />
+                        <h4>Adress</h4>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                Street:
+                            </div>
+                            <div class="col-sm-6">
+                                @Model.Addresses.Streed
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                HouseNumber:
+                            </div>
+                            <div class="col-sm-6">
+                                @Model.Addresses.HouseNumber
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                Zipcode:
+                            </div>
+                            <div class="col-sm-6">
+                                @Model.Addresses.PostCode
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                City:
+                            </div>
+                            <div class="col-sm-6">
+                                @Model.Addresses.City
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                State:
+                            </div>
+                            <div class="col-sm-6">
+                                @Model.Addresses.State
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                Country:
+                            </div>
+                            <div class="col-sm-6">
+                                @Model.Addresses.Counrty
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Acount Info</h4>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                Email Confirmed:
+                            </div>
+                            <div class="col-sm-6">
+                                @if (Model.EmailConfirmed)
+                                {
+                                <span> True </span>
+                                }
+                                else
+                                {
+                                <span> False </span>
+                                }
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                Two factor enabled:
+                            </div>
+                            <div class="col-sm-6">
+                                @if (Model.TwoFactorEnabled)
+                                {
+                                <span> True </span>
+                                }
+                                else
+                                {
+                                <span> False </span>
+                                }
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                Acces Failed Count:
+                            </div>
+                            <div class="col-sm-6">
+                                @Model.AccessFailedCount
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                Role:
+                            </div>
+                            <div class="col-sm-6">
+                                @Model.AspNetRoles.First().Name
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.ActionLink("Edit", "EditUser", "Manager", new { id = Model.Id }, new { @style = "padding: 10px 0; width: 100px; border-radius: 40px;", @class = "btn btn-primary", @role = "button" })
+                    </div>
+                    <div class="col-sm-6" style="text-align:right">
+                        @Html.ActionLink("Back to list", "Users", "Manager", new { id = Model.Id }, new { @style = "padding: 10px 0; width: 100px; border-radius: 40px;", @class = "btn btn-primary", @role = "button" })
+                    </div>
+                </div>
+
+                <br />
+            </div>
+        </div>
+    </div>
+</div>

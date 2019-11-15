@@ -1,0 +1,63 @@
+﻿@model Spa_Resort_bali.Models.LodgeTypes
+
+@{
+    ViewBag.Title = "AddLodgeType";
+}
+<style>
+    body {
+        background-color: #f4f4f4
+    }
+
+    .card {
+        padding: 0% 20%;
+    }
+</style>
+
+<div class="container">
+    @using (Html.BeginForm("AddLodgeTypeSubmit", "Manager", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+    <div class="card">
+        <div class="card-body">
+            <h2 style="color:#007BFF">Make a new lodge type</h2>
+            <div class="row ">
+                <div class="col-sm-6">
+                    <div style="display:none;">@Html.AntiForgeryToken()</div>
+                    @Html.LabelFor(m => m.Name, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })<br />
+
+                    @Html.LabelFor(m => m.Surface, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.Surface, new { @class = "form-control", Type = "number" })<br />
+
+                    <span class="control-label">Max Quests</span><br />
+                    @Html.TextBoxFor(m => m.MaxPersons, new { @class = "form-control", Type = "number" })<br />
+
+                    @Html.LabelFor(m => m.Description, new { @class = " control-label" })
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })<br />
+
+                    <span class="control-label">Price</span><br />
+                    <input type="text" name="price" value="" class="form-control" /><br />
+
+                    @Html.LabelFor(model => model.Picture, htmlAttributes: new { @class = "control-label" })
+
+                    <input type="file" name="upload" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" />
+                    <br />
+                    <br />
+                    <input type="submit" style="border-radius: 40px; padding: 5px 40px; width: 100%;" class="btn btn-primary" value="Add Lodge Type" />
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
+                </div>
+                <div class="col-md-6" style="text-align: right">
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

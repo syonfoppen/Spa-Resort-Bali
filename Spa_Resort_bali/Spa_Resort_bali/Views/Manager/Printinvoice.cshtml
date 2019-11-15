@@ -1,0 +1,41 @@
+﻿<div class="container">
+    <div class="card" style="margin-top: 160px; margin-bottom: 100px;">
+        <div class="card-body" style="margin: auto;">
+            <h2 style="color:#007BFF">Print Invoice</h2>
+            @{
+                    
+                if (ViewBag.message != "" && ViewBag.message != null)
+                {
+                    <div class="alert alert-danger">
+                        <strong>Error!</strong> @ViewBag.message
+                    </div>
+                }
+            }
+            @using (Html.BeginForm("PrintinvoicesPrint", "Manager", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <text>Select a year (required)</text><br />
+                <input type="number" name="year" min="2019"class="form-control" placeholder="Year" required /><br />
+
+                <text>Select a month</text><br />
+                <select name="month" class="custom-select">
+                    <option selected value=''>Show whole year</option>
+                    <option value='1'>Janaury</option>
+                    <option value='2'>February</option>
+                    <option value='3'>March</option>
+                    <option value='4'>April</option>
+                    <option value='5'>May</option>
+                    <option value='6'>June</option>
+                    <option value='7'>July</option>
+                    <option value='8'>August</option>
+                    <option value='9'>September</option>
+                    <option value='10'>October</option>
+                    <option value='11'>November</option>
+                    <option value='12'>December</option>
+                </select><br />
+                <br />
+                <input type="submit" style="border-radius: 40px; padding: 5px 40px; width: 100%;" class="btn btn-primary" value="Print" />
+            }
+        </div>
+    </div>
+</div>
+

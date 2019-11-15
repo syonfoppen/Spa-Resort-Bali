@@ -1,0 +1,128 @@
+﻿@model Spa_Resort_bali.Models.Bookings
+@{
+    Layout = null;
+}
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/Printbooking.css" rel="stylesheet" />
+
+<script>
+
+    window.print();
+    window.onafterprint = function(){
+   history.back();
+   }
+</script>
+<h1>Spa Resort Bali</h1>
+
+<h2>Booking: #@Model.BookingId</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Geust number</th>
+            <th>Personal data</th>
+            <th>Address</th>
+            <th>Contact</th>
+        </tr>
+    </thead>
+    <tr>
+        <td>@Model.AspNetUsers.ClientNumber</td>
+        <td>
+            <div class="row">
+                <div class="col-sm-4">Firstname: </div>
+                <div class="col-sm-4">@Model.AspNetUsers.Firstname</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">Lastname: </div>
+                <div class="col-sm-4">@Model.AspNetUsers.Lastname</div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col-sm-4">Address: </div>
+                <div class="col-sm-5">@Model.AspNetUsers.Addresses.Streed @Model.AspNetUsers.Addresses.HouseNumber</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">City: </div>
+                <div class="col-sm-4">@Model.AspNetUsers.Addresses.City</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">Zipcode: </div>
+                <div class="col-sm-4">@Model.AspNetUsers.Addresses.PostCode</div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col-sm-4">Phone: </div>
+                <div class="col-sm-4">@Model.AspNetUsers.PhoneNumber</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">Email: </div>
+                <div class="col-sm-4">@Model.AspNetUsers.Email</div>
+            </div>
+        </td>
+    </tr>
+</table>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Booking number
+            </th>
+            <th>
+                Check in
+            </th>
+            <th>
+                Check out
+            </th>
+            <th>
+                Lodge type
+            </th>
+            <th>
+                Lodge number
+            </th>
+            <th>
+                Lodge price
+            </th>
+            <th>
+                Discount percentage
+            </th>
+            <th>
+                Price
+            </th>
+        </tr>
+    </thead>
+    <tr>
+        <td>
+            @Model.BookingId
+        </td>
+        <td>
+            @DateTime.Parse(Model.CheckInDate.ToString()).ToString("yyyy-dd-MM")
+        </td>
+        <td>
+            @DateTime.Parse(Model.CheckOutDate.ToString()).ToString("yyyy-dd-MM")
+        </td>
+        <td>
+            @Model.Lodges.LodgeTypes.Name
+        </td>
+        <td>
+            @Model.Lodges.Code
+        </td>
+        @{
+            var price = @Math.Round(((int)(Model.CheckOutDate - Model.CheckInDate).TotalDays) * Model.Price, 2);
+        }
+        <td>
+            €@price
+        </td>
+        <td>
+            @Model.Discount
+        </td>
+        <td>
+            @{
+                decimal discount = (decimal)Model.Discount / 100;
+                decimal finalprice = price - (price * discount);
+            }
+            €@Math.Round(finalprice, 2)
+        </td>
+    </tr>
+</table>

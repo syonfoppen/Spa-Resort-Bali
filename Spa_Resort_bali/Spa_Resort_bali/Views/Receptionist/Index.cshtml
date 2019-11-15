@@ -1,0 +1,244 @@
+﻿@* This is the viewbag for all the bookings. It's  declared here so it can be used all over the file. *@
+@{List<Spa_Resort_bali.Models.Bookings> bookings = ViewBag.Bookings;}
+
+<link href="~/Content/Receptionist.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="card" style="margin-top: 100px;">
+        <div class="card-body">
+            @* This is the page title. *@
+            <h1>All Bookings</h1>
+
+            <hr />
+
+
+            <br />
+            @* This is the categorisation for the table. *@
+            <table class="table table-striped table-bordered responsive nowrap" width="100%" id="bookingTable">
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Booking NR</th>
+                        <th>Check-in date</th>
+                        <th>Check-out date</th>
+                        <th>Days</th>
+                        <th>Lodge Type</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Information</th>
+                    </tr>
+                </thead>
+
+                @* This is the table with all the bookings inside of it. *@
+                <tbody id="allBookings">
+                    @{
+                        foreach (var item in bookings)
+                        {
+                            string status = "";
+                            if (item.CheckInDate < DateTime.Now)
+                            {
+                                status = "upcoming";
+                            }
+                            else if (item.CheckOutDate >= DateTime.Now)
+                            {
+                                status = "ongoing";
+                            }
+                            else if (item.CheckOutDate == DateTime.Now)
+                            {
+                                status = "ending";
+                            }
+                            else if (item.Canceled == true)
+                            {
+                                status = "canceled";
+                            }
+                            else if (item.CheckOutDate < DateTime.Now)
+                            {
+                                status = "outdated";
+                            }
+
+                            <tr class="@status">
+
+                                <td>@item.AspNetUsers.Firstname @item.AspNetUsers.Lastname</td>
+                                <td>#@item.BookingId</td>
+                                <td>@DateTime.Parse(item.CheckInDate.ToString()).ToString("yyyy-dd-MM")</td>
+                                <td>@DateTime.Parse(item.CheckOutDate.ToString()).ToString("yyyy-dd-MM")</td>
+                                <td>@Math.Round((item.CheckOutDate - item.CheckInDate).TotalDays)</td>
+                                <td>@item.Lodges.LodgeTypes.Name</td>
+                                <td>
+                                    @{
+                                        decimal discount = (decimal)item.Discount / 100;
+                                        decimal days = (decimal)(item.CheckOutDate - item.CheckInDate).TotalDays;
+                                        decimal price = days * item.Price;
+                                        decimal finalprice = Math.Round(price - (price * discount), 2);
+
+                                    }
+                                    €@finalprice
+                                </td>
+                                <td>@status</td>
+                                <td>
+                                    <a href="/bookingview/details/@item.BookingId">Information</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 50px;">
+        <div class="card-body">
+
+            <h1>Cleaning Schedules</h1>
+
+            <table class="table table-striped table-bordered" width="100%" id="cleaningTable">
+                <thead>
+                    <tr>
+                        <th>Lodge Type</th>
+                        <th>Lodge ID</th>
+                        <th>Last Customer</th>
+                        <th>Cleaning Start Date</th>
+                        <th>Cleaning End Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="allCleaningSchedules">
+                    @{
+                        foreach (var item in bookings.Where(t => t.CheckOutDate > DateTime.Now))
+                        {
+                            string status = "";
+                            if (item.CheckOutDate > DateTime.Now)
+                            {
+                                status = "upcoming";
+                            }
+                            else if (item.CheckOutDate <= DateTime.Now)
+                            {
+                                status = "ongoing";
+                            }
+                            else if (item.CheckOutDate < DateTime.Now)
+                            {
+                                status = "outdated";
+                            }
+
+                            <tr class="@status">
+                                <td>@item.Lodges.LodgeTypes.Name</td>
+                                <td>@item.LodgeId</td>
+                                <td>@item.AspNetUsers.Firstname @item.AspNetUsers.Lastname</td>
+                                <td>@DateTime.Parse(item.CheckOutDate.ToString()).ToString("yyyy-dd-MM") | 11:00 AM</td>
+                                <td>@DateTime.Parse(item.CheckOutDate.ToString()).ToString("yyyy-dd-MM") | 13:30 PM</td>
+                                <td>@status</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@* These are all the scripts of the file. *@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-html5-1.6.1/b-print-1.6.1/r-2.2.3/datatables.min.css" />
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-html5-1.6.1/b-print-1.6.1/r-2.2.3/datatables.min.js"></script>
+
+
+
+    @* Script for the booking table. *@
+    <script>
+        $(document).ready(function () {
+
+            var table = $('#bookingTable').DataTable({
+                dom: 'Bfrtlip',
+                searching: true,
+                paging: true,
+                responsive: true,
+                buttons: [{
+                    extend: 'collection',
+                    text: 'Export',
+                    buttons: [
+                        {
+                            text: 'Print Table',
+                            extend: 'print',
+                            exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                                }
+                        },
+                        {
+                            text: 'Copy Table',
+                            extend: 'copy',
+                             exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                                }
+                        },
+                        {
+                            text: 'Download Excel',
+                            extend: 'excel',
+                             exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                                }
+                        }
+                        ,
+                        {
+                            text: 'Download PDF',
+                            extend: 'pdf',
+                             exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                                }
+                        }
+                    ]
+                }
+                ]
+
+            });
+
+        });
+
+
+    </script>
+
+    @* Script for the cleaning table. *@
+    <script>
+        $(document).ready(function () {
+            $('#cleaningTable').DataTable({
+                dom: 'Bfrtlip',
+                searching: true,
+                paging: true,
+                responsive: true,
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: 'Export',
+                        buttons: [
+                            {
+                                text: 'Print Table',
+                                extend: 'print'
+
+
+                            },
+                            {
+                                text: 'Copy Table',
+                                extend: 'copy'
+                            },
+                            {
+                                text: 'Download Excel',
+                                extend: 'excel'
+                            }
+                            ,
+                            {
+                                text: 'Download PDF',
+                                extend: 'pdf'
+                            }
+                        ]
+                    }
+                ]
+
+            });
+        });
+    </script>
+}

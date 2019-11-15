@@ -1,0 +1,60 @@
+﻿@model Spa_Resort_bali.Models.Discounts
+
+@{
+    ViewBag.Title = "Adddiscount";
+}
+
+<div class="container">
+    <div class="card" style="margin-top: 160px; margin-bottom: 100px;">
+        <div class="card-body">
+            <h2 style="color:#007BFF">Add discount</h2>
+            @{
+                if (ViewBag.message != "" && ViewBag.message != null)
+                {
+                    <div class="alert alert-danger">
+                        <strong>Error!</strong> @ViewBag.message
+                    </div>
+                }
+            }
+
+
+            @using (Html.BeginForm("AddDiscountApply", "Manager", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Month, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Month, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Month, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Year, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input class="btn btn-primary" style="border-radius: 40px;" type="submit" value="apply" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,243 @@
+﻿.card-c {
+    position: relative;
+    background-color: white;
+    width: 100%;
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    max-width: 500px;
+    padding: 20px;
+}
+
+    .card-c p {
+        padding-top: 30px;
+        color: dimgray;
+    }
+
+    .card-c .card-c-img {
+        float: middle;
+        margin: auto;
+        width: 100%;
+        height: auto;
+    }
+
+.info {
+    position: relative;
+    top: -50px;
+}
+
+    .info .bg1 {
+        position: relative;
+        width: 100vw;
+        height: 50vh;
+        background-color: white;
+        -webkit-clip-path: polygon(0 0, 100% 10%, 100% 60%, 0 60%);
+        clip-path: polygon(0 0, 100% 10%, 100% 60%, 0 60%);
+        z-index: 2;
+    }
+
+    .info .bg2 {
+        color: dimgray;
+        position: relative;
+        width: 100vw;
+        height: auto;
+        padding-bottom: 150px;
+        background-color: white;
+        -webkit-transform: translateY(-45vh);
+        transform: translateY(-45vh);
+        -webkit-clip-path: polygon(0 10%, 100% 0, 100% 90%, 0% 100%);
+        clip-path: polygon(0 10%, 100% 0, 100% 90%, 0% 100%);
+        z-index: 1;
+    }
+
+        .info .bg2 h3 {
+            padding: 10px;
+            padding-top: 150px;
+            font-size: 2em;
+        }
+
+        .info .bg2 p {
+            padding: 10px;
+            max-width: 550px;
+        }
+
+header {
+    margin-top: -80px;
+    padding: 10px;
+    height: 100vh;
+    width: 100%;
+    padding-top: 80px;
+}
+
+    header h1 {
+        color: white;
+        text-align: center;
+        font-size: 3em;
+        font-family: Tahu;
+    }
+
+    header .header-grid {
+        height: 100%;
+    }
+
+    header .booking {
+        background-color: white;
+        max-width: 100%;
+        width: 280px;
+        margin: auto;
+        padding: 10px;
+        border-radius: 8px;
+        overflow:hidden;
+    }
+
+        header .booking .date-container {
+            max-width: 100%;
+            display: -ms-grid;
+            display: grid;
+            -ms-grid-columns: 50% 50%;
+            grid-template-columns: 50% 50%;
+        }
+
+        header .booking h2 {
+            text-align: center;
+        }
+        .booking .date{
+            max-width:100%;
+        }
+        header .booking input[type=date] {
+            max-width: 100%;
+            width:100%;
+            border-radius: 5px;
+            border: 1px solid rgb(204, 204, 204);
+            padding:5%;
+        }
+        .booking .date:first-child input[type=date] {
+            border-top-right-radius:0px;
+            border-bottom-right-radius:0px;
+        }
+.booking .date:last-child input[type=date] {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.booking .submit {
+    margin: auto;
+    margin-top: 10px;
+    text-align: center;
+}
+.booking input {
+    max-width: 100%;
+}
+
+.date-container div {
+    max-width: 100%;
+    width:100%;
+}
+
+header .booking select {
+    max-width: 100%;
+    width: 100%;
+}
+
+header .booking label {
+    display: block;
+}
+
+    @media only screen and (min-width: 450px) {
+        .card-c-container {
+            display: -ms-grid;
+            display: grid;
+            -ms-grid-columns: auto auto;
+            grid-template-columns: auto auto;
+            grid-gap: 10vw;
+            background-color: white;
+            padding: 50px;
+        }
+
+        .booking {
+            position: relative;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-0%);
+            margin-top: 50vh;
+        }
+
+        header h1 {
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+            margin-top: 50vh;
+            font-size: 20vh;
+        }
+
+        .card-c {
+            padding: 0;
+            padding-bottom: 50px;
+        }
+
+            .card-c img {
+                min-width: 100%;
+                width: 100%;
+            }
+
+            .card-c p {
+                padding: 10px;
+            }
+
+            .card-c span {
+                padding: 10px;
+            }
+
+        .header-grid {
+            display: -ms-grid;
+            display: grid;
+            -ms-grid-columns: auto auto;
+            grid-template-columns: auto auto;
+        }
+    }
+@media only screen and (max-width: 700px) {
+    header h1 {
+        font-size: 9vh;
+    }
+    .header-grid {
+        display: -ms-grid;
+        display: grid;
+        -ms-grid-columns: auto;
+        grid-template-columns: auto;
+    }
+    .card-c-container {
+        display: -ms-grid;
+        display: grid;
+        -ms-grid-columns: auto;
+        grid-template-columns: auto;
+        grid-gap: 10vw;
+        background-color: white;
+        padding: 50px;
+    }
+}   
+    @media only screen and (max-width: 450px) {
+        .card-c-container {
+            display:block;
+            background-color:rgba(0,0,0,0);
+            padding:0;
+
+        }
+        .card-c {
+            -webkit-clip-path: polygon(0 5%, 100% 0, 100% 95%, 0% 100%);
+            clip-path: polygon(0 5%, 100% 0, 100% 95%, 0% 100%);
+            padding-bottom: 150px;
+            padding-top: 150px;
+        }
+
+        .header-grid {
+            display: -ms-grid;
+            display: grid;
+            margin-top: 80px;
+            -ms-grid-columns: auto;
+            grid-template-columns: auto;
+        }
+
+        .card-c img {
+            -webkit-filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 0.466));
+            filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 0.466));
+        }
+    }
+
+    /*# sourceMappingURL=style.css.map */

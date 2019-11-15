@@ -1,0 +1,107 @@
+﻿@{
+    List<Spa_Resort_bali.Models.Bookings> bookings = ViewBag.bookings;
+    List<Spa_Resort_bali.Models.LodgeTypes> lodgeTypes = ViewBag.lodgetypes;
+
+    int days = 0;
+    decimal finalpriceLodgeType = 0;
+    decimal totalprice = 0;
+
+}
+@{
+    Layout = null;
+}
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/Printbooking.css" rel="stylesheet" />
+
+<script>
+
+    window.print();
+    window.onafterprint = function(){
+   window.location.href = "/Manager/Printinvoice";
+   }
+</script>
+
+<h1>Spa Resort Bali</h1>
+<br />
+@{
+    if (ViewBag.month != null)
+    {
+    <h2>Invoice of @ViewBag.month / @ViewBag.year</h2>
+    }
+    else
+    {
+    <h2>Invoice of @ViewBag.year</h2>
+    }
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Lodge Name</th>
+            <th>Number Of Booking</th>
+            <th>Total Days Booked</th>
+            <th>Occupancy Rate</th>
+            <th>Total Provit Per lodge</th>
+        </tr>
+    </thead>
+
+    @{
+        foreach (var lodgetype in lodgeTypes)
+        {
+            days = 0;
+            finalpriceLodgeType = 0;
+            foreach (var booking in bookings.Where(t => t.Lodges.LodgeTypeId == lodgetype.LodgeTypeId))
+            {
+                days += (int)Math.Round((booking.CheckOutDate - booking.CheckInDate).TotalDays);
+
+                var price = @Math.Round(((int)(booking.CheckOutDate - booking.CheckInDate).TotalDays) * booking.Price, 2);
+
+                decimal discount = (decimal)booking.Discount / 100;
+                finalpriceLodgeType += price - (price * discount);
+            }
+            totalprice += finalpriceLodgeType;
+        <tr>
+            <td>
+                @lodgetype.Name
+            </td>
+            <td>
+                @bookings.Where(t => t.Lodges.LodgeTypeId == lodgetype.LodgeTypeId).Count()
+            </td>
+            <td>
+                @days
+            </td>
+            <td>
+                @{
+                    if (ViewBag.month != null)
+                    {
+                        double Occupancy = ((double)days / DateTime.DaysInMonth(ViewBag.year, ViewBag.month)) * 100.0;
+
+                    @Math.Round(Occupancy, 2).ToString("N2")<span>%</span>
+                    }
+                    else
+                    {
+
+                        double Occupancy = ((double)days / 365.0) * 100.0;
+
+                    @Math.Round(Occupancy, 2).ToString("N2")<span>%</span>
+
+                    }
+                }
+            </td>
+            <td>
+                €@Math.Round(finalpriceLodgeType, 2).ToString("N2")
+            </td>
+            @{
+
+            }
+        </tr>
+        }
+    }
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><b>Total Profit:</b></td>
+        <td><b>€@Math.Round(totalprice, 2).ToString("N2")</b></td>
+    </tr>
+</table>

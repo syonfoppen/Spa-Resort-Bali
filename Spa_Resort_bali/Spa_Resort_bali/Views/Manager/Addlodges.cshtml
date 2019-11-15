@@ -1,0 +1,57 @@
+﻿@model Spa_Resort_bali.Models.AddLodgeViewModels
+@{
+    ViewBag.Title = "Addlodges";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    List<Spa_Resort_bali.Models.LodgeTypes> lodgeTypes = ViewBag.LodgeTypes;
+}
+<style>
+    .container {
+        margin-top: 160px;
+        margin-bottom: 100px;
+    }
+
+    h6 {
+        font-weight: normal;
+    }
+</style>
+
+<div class="container">
+    <div class="card">
+        <div style="margin:auto;">
+            <h2 style="color:#007BFF">addlodges</h2>
+            @using (Html.BeginForm("Addlodgessubmit", "Manager", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+            <div class="row">
+                <div style="margin:auto;">
+                    <div style="display:none;">@Html.AntiForgeryToken()</div>
+                    <h6>LodgeType</h6>
+                    <select onchange="ChangeLodgeType(this.value)" class="form-control" id="resorts" name="LodgeTypes" required>
+                        <option value="default">No lodge selected</option>
+                        <!--a loop for each item in lodgetypes-->
+                        @foreach (var item in lodgeTypes)
+                            {
+                        <option value="@item.LodgeTypeId">@item.Name</option>
+                            }
+                    </select><br />
+                    @Html.LabelFor(m => m.Code, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })<br />
+
+                    <h6>Zipcode</h6>
+                    @Html.TextBoxFor(m => m.PostCode, new { @class = "form-control" })<br />
+
+                    <h6>Street</h6>
+                    @Html.TextBoxFor(m => m.Streed, new { @class = "form-control" })<br />
+
+                    @Html.LabelFor(m => m.HouseNumber, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.HouseNumber, new { @class = "form-control" })<br />
+
+                    <br />
+                    <input type="submit" style="border-radius: 40px; padding: 5px 40px; width: 100%;" class="btn btn-primary" value="Add Lodge" />
+                </div>
+            </div>
+             }
+        </div>
+    </div>
+</div>

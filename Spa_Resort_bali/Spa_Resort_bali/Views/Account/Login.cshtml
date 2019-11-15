@@ -1,0 +1,76 @@
+﻿@using Spa_Resort_bali.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
+
+<style>
+    .card-body * {
+        margin: auto;
+        text-align: center;
+    }
+    header {
+        min-height: 100vh;
+        max-height: 100vh;
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+    .card{
+        margin: 100px;
+        position:relative;
+        top:50vh;
+        -ms-transform: translateY(-100%);
+        transform: translateY(-100%);
+    }
+    #title {
+        color:white;
+        font-family:Tahu;
+        font-size: 12em;
+        position: relative;
+        -ms-transform: translateY(-20vh);
+        transform: translateY(-20vh);
+        top: 50vh;
+        text-align: center;
+        margin:100px;
+}
+    
+</style>
+<header id="header">
+    <div class="container">
+
+        <div class="card" style="max-width:380px;border-radius: 20px;">
+            <div class="card-body">
+
+                <h2 style="text-align: center; color:#007BFF">Login</h2><br />
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" }) <br />
+
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                    <input type="submit" style="border-radius: 40px; padding: 5px 40px;" class="btn btn-primary" value="Login" />
+
+                    <p>
+                        <br>
+                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+    <h1 id="title">Spa Resort Bali</h1>
+</header>
+    <div id="background"></div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

@@ -1,0 +1,90 @@
+﻿@model Spa_Resort_bali.Models.LodgeTypes
+
+<div class="container">
+    <div class="card" style="margin-top: 160px; margin-bottom: 100px">
+        <div class="card-body">
+            <h2 style="color:#007BFF"> Loge Type @Model.Name</h2>
+            <hr />
+            <div class="row">
+                @*LogeType details*@
+                <div class="col-md-4">
+                    <h4>LodgeType Details</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Name: </b>
+                        </div>
+                        <div class="col-md-6">
+                            @Model.Name
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Surface: </b>
+                        </div>
+                        <div class="col-md-6">
+                            @Model.Surface
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>MaxPersons: </b>
+                        </div>
+                        <div class="col-md-6">
+                            @Model.MaxPersons
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Price Per Night: </b>
+                        </div>
+                        <div class="col-md-6">
+                            €@Math.Round(Model.LodgePrice.Where(t => t.LodgeTypeId == Model.LodgeTypeId && DateTime.Now > t.StartingDate && t.EndDate == null).First().price, 2)
+                        </div>
+                    </div>
+                </div>
+                <br /> <br />
+                @*Lodge details*@
+                <div class="col-md-4">
+                    <h4>Lodges</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Number of lodges: </b>
+                        </div>
+                        <div class="col-md-6">
+                            @Model.Lodges.Count
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h4>Picture</h4>
+                    @{
+                        if (Model.Picture != null && Model.Picture.Length > 0)
+                        {
+
+                            var base64 = Convert.ToBase64String(Model.Picture);
+                            var imgSrc = String.Format("data:image;base64,{0}", base64);
+
+                        <img src="@imgSrc" class="image" style=" max-width: 250px" />
+                        }
+
+                    }<br />
+                </div>
+            </div>
+            <hr />
+            <br />
+
+            <h2>Description</h2>
+            @Model.Description
+
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
+                </div>
+                <div class="col-md-6" style="text-align: right">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

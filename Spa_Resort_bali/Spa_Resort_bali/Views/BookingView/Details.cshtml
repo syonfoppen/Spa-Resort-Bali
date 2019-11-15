@@ -1,0 +1,215 @@
+﻿@model Spa_Resort_bali.Models.Bookings
+
+<div class="container">
+    <div class="card" style="margin-top: 100px; margin-bottom: 100px">
+        <div class="card-body">
+            <h2 style="color:#007BFF"> Booking: #@Model.BookingId - @Model.Lodges.LodgeTypes.Name - @DateTime.Parse(Model.CheckInDate.ToString()).ToString("yyyy-dd-MM") / @DateTime.Parse(Model.CheckOutDate.ToString()).ToString("yyyy-dd-MM")</h2>
+
+            <hr />
+            <div class="row">
+                @*booking details*@
+                <div class="col-md-4">
+                    <h4>Booking Details</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Checkin Date:</b>
+                        </div>
+                        <div class="col-md-6">
+                            @DateTime.Parse(Model.CheckInDate.ToString()).ToString("yyyy-dd-MM")
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Checkout Date:</b>
+                        </div>
+                        <div class="col-md-6">
+                            @DateTime.Parse(Model.CheckOutDate.ToString()).ToString("yyyy-dd-MM")
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Days:</b>
+                        </div>
+                        <div class="col-md-6">
+                            @Math.Round((Model.CheckOutDate - Model.CheckInDate).TotalDays)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Discount:</b>
+                        </div>
+                        <div class="col-md-6">
+                            @Model.Discount%
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Price per night:</b>
+                        </div>
+                        <div class="col-md-6">
+                            €@Math.Round(Model.Price, 2)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Total price:</b>
+                        </div>
+                        <div class="col-md-6">
+                            @{
+                                    decimal discount = (decimal)Model.Discount / 100;
+                                    decimal days = (decimal)(Model.CheckOutDate - Model.CheckInDate).TotalDays;
+                                    decimal price = days * Model.Price;
+                                    decimal finalprice = Math.Round(price - (price * discount), 2);
+
+                            }
+                            €@finalprice
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Status:</b>
+                        </div>
+                        <div class="col-md-6">
+                            @{
+                                    if (Model.Canceled)
+                                    {
+                                <span>Canceled</span>
+                                    }
+                                    else if (Model.CheckOutDate < DateTime.Now)
+                                    {
+                                <span>Outdated</span>
+                                    }
+                                    else if (Model.CheckOutDate >= DateTime.Now)
+                                    {
+                                <span>On going</span>
+                                    }
+                            }
+                        </div>
+                    </div>
+                </div>
+                <br /> <br />
+                @*Lodge details*@
+                <div class="col-md-4">
+                    <h4>Lodge Details</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Lodge Number:</b>
+                        </div>
+                        <div class="col-md-6">
+                            @Model.Lodges.Code
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Type:</b>
+                        </div>
+                        <div class="col-md-6">
+                            @Model.Lodges.LodgeTypes.Name
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Surface:</b>
+                        </div>
+                        <div class="col-md-6">
+                            @Model.Lodges.LodgeTypes.Surface m³
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Max Guests:</b>
+                        </div>
+                        <div class="col-md-6">
+                            @Model.Lodges.LodgeTypes.MaxPersons
+                        </div>
+                    </div>
+                </div>
+                @*Lodge adress*@
+                <div class="col-md-4">
+                    <h4>Lodge Address</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Street:</b>
+                        </div>
+                        <div class="col-md-6">
+                            @Model.Lodges.Addresses.Streed
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>House number:</b>
+                        </div>
+                        <div class="col-md-6">
+                            @Model.Lodges.Addresses.HouseNumber
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Zipcode:</b>
+                        </div>
+                        <div class="col-md-6">
+                            @Model.Lodges.Addresses.PostCode
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>City: </b>
+                        </div>
+                        <div class="col-md-6">
+                            @Model.Lodges.Addresses.City
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            @{
+                    if (Model.Description != "" && Model.Description != null)
+                    {
+                <h3>Command</h3>
+                <span>@Model.Description</span>
+                <hr />
+                    }
+            }
+
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
+                    @if (User.IsInRole("Manager") || User.IsInRole("Receptionist"))
+                        {
+                    <a href="/BookingView/printBooking/@Model.BookingId" class="btn btn-primary">Print Booking</a>
+                        }
+                </div>
+                <div class="col-md-6" style="text-align: right">
+                    @{
+                            if (Model.CheckInDate.AddDays(-7) > DateTime.Now || User.IsInRole("Manager") || User.IsInRole("Receptionist"))
+                            {
+                                if (Model.Canceled == false)
+                                {
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong">
+                            Cancel Booking
+                        </button>
+                                    }
+                                }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Are you sure you want to cancel your booking?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <a href="/BookingView/Cancel/@Model.BookingId" class="btn btn-danger">Yes</a>
+            </div>
+        </div>
+    </div>
+</div>

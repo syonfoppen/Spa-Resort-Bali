@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="84c7367430eb46799e58ce7bfce6114a" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="Spa_Resort_Bali_DatabaseModel.Addresses" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Spa_Resort_Bali_DatabaseModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Spa_Resort_Bali_DatabaseModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Spa_Resort_Bali_DatabaseModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Spa_Resort_Bali_DatabaseModel.AspNetUsers" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Spa_Resort_Bali_DatabaseModel.Bookings" Width="1.5" PointX="8.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Spa_Resort_Bali_DatabaseModel.Lodges" Width="1.5" PointX="6" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Spa_Resort_Bali_DatabaseModel.LodgeTypes" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="Spa_Resort_Bali_DatabaseModel.FK_AspNetUsers_Addresses" ManuallyRouted="false" />
+        <AssociationConnector Association="Spa_Resort_Bali_DatabaseModel.FK_Lodges_Addresses" ManuallyRouted="false" />
+        <AssociationConnector Association="Spa_Resort_Bali_DatabaseModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="Spa_Resort_Bali_DatabaseModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="Spa_Resort_Bali_DatabaseModel.FK_Bookings_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="Spa_Resort_Bali_DatabaseModel.FK_Bookings_Lodges" ManuallyRouted="false" />
+        <AssociationConnector Association="Spa_Resort_Bali_DatabaseModel.FK_Lodges_LodgeTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="Spa_Resort_Bali_DatabaseModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Spa_Resort_Bali_DatabaseModel.Discounts" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Spa_Resort_Bali_DatabaseModel.LodgePrice" Width="1.5" PointX="6" PointY="1" />
+        <AssociationConnector Association="Spa_Resort_Bali_DatabaseModel.FK_LodgePrice_LodgeTypes" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

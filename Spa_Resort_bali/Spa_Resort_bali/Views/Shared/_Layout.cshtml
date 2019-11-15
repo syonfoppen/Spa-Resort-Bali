@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/shared.css" rel="stylesheet" />
+</head>
+<body onload="OpenNav()">
+    <Script>
+        function OpenNav() {
+            let ul = document.getElementsByClassName("ul");
+            let bg = document.getElementById("bg");
+
+            for (i = 0; i < ul.length; i++) {
+                if (ul[i].style.display === "none" && !(screen.width > 450)) {
+                    ul[i].style.display = "block";
+                    bg.style = "height:80vh; clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 90%);";
+                }
+                else if (!(screen.width > 450)) {
+                    ul[i].style.display = "none";
+                    bg.style = "height:80px; clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 60%);";
+                }
+            }
+        }
+    </Script>
+    <nav>
+        <div class="nav-bg-m shadow-m" id="bg">
+            <div class="hamburger-m" onclick="OpenNav()">
+                <hr>
+                <hr>
+                <hr>
+            </div>
+            <ul class="ul">
+                <li><a href="/Home/Index#header">Home</a></li>
+                <li><a href="/Home/Index#info">Information</a></li>
+                <li><a href="/Home/Index#lodges">Lodges</a></li>
+                <li><a href="#footer">Contact</a></li>
+            </ul>
+            <ul class="ul-right">
+                @if (Request.IsAuthenticated)
+                {
+
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                    <li class="login"><a href="javascript:document.getElementById('logoutForm').submit()">Sign Out</a></li>
+                    <li class="login">@Html.ActionLink("Profile", "Index", "Profile")</li>
+                    }
+
+                    if (User.IsInRole("Manager"))
+                    {
+                        <li>@Html.ActionLink("Manager", "Index", "Manager")</li>
+                    }
+                    else if (User.IsInRole("Receptionist"))
+                    {
+                        <li>@Html.ActionLink("Receptionist", "Index", "Receptionist")</li>
+                    }
+                }
+                else
+                {
+                    <li class="login">@Html.ActionLink("Sign Up", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                    <li class="login">@Html.ActionLink("Sign In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                }
+            </ul>
+        </div>
+    </nav>
+    
+
+    @RenderBody()
+    <footer id="footer">
+        <h2>Contact</h2>
+        <br />
+        <ul>
+            <li>
+                <img src="~/Content/Images/phonenumberIcon.png" />
+                &nbsp;+62 1313175
+            </li>
+            <li>
+                <img src="~/Content/Images/emailIcon.png" />
+                &nbsp;helpdesk@sparesortbali.com
+            </li>
+            <li>
+                <img src="~/Content/Images/locationIcon.png" />
+                &nbsp;Spa Resort Bali, Kabupaten Buleleng, Bali 81173
+            </li>
+        </ul>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

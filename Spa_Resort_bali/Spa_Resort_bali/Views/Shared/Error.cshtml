@@ -1,0 +1,27 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<div class="container">
+    <div class="card" style="margin-top: 160px; margin-bottom: 100px;">
+        <div class="card-body">
+            <div>
+                <h1 class="text-danger">Error.</h1>
+                @{
+                    if (String.IsNullOrEmpty(ViewBag.errorMessage))
+                    {
+                    <h2 class="text-danger">An error occurred while processing your request.</h2>
+                    <h3>Error Message: @Model.Exception.Message</h3>
+                    }
+                    else
+                    {
+                    <h2 class="text-danger">@ViewBag.errorMessage</h2>
+                    
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

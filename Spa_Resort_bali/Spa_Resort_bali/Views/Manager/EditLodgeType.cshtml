@@ -1,0 +1,79 @@
+﻿@model Spa_Resort_bali.Models.LodgeTypes
+@{
+    ViewBag.Title = "AddLodgeType";
+}
+<style>
+    body {
+        background-color: #f4f4f4
+    }
+
+    .card {
+        padding: 0% 20%;
+    }
+</style>
+
+<div class="container">
+    @using (Html.BeginForm("EditLodgeTypeSubmit", "Manager", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data"  }))
+    {
+    <div class="card" style="margin-top: 160px; margin-bottom: 100px">
+        <div class="card-body">
+            <h2 style="color:#007BFF">Edit LodgeType: @Model.Name</h2>
+            <div class="row ">
+                <div class="col-sm-6">
+                    <div style="display:none;">@Html.AntiForgeryToken()</div>
+                    @Html.LabelFor(m => m.Name, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })<br />
+
+                    <span class="control-label">disabled</span>
+                    @Html.EditorFor(model => model.Disabled)<br /><br />
+
+                    @Html.LabelFor(m => m.Surface, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.Surface, new { @class = "form-control", Type = "number" })<br />
+
+                    @Html.LabelFor(m => m.MaxPersons, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.MaxPersons, new { @class = "form-control", Type = "number" })<br />
+
+                    @Html.LabelFor(m => m.Description, new { @class = " control-label" })
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })<br />
+
+                    <span class="control-label">Price</span><br />
+                    <input type="text" name="price" value="@Math.Round(Model.LodgePrice.Where(t => t.LodgeTypeId == Model.LodgeTypeId && DateTime.Now > t.StartingDate && t.EndDate == null).First().price, 2)" class="form-control" /> <br />
+
+                    @{
+                        if (Model.Picture != null && Model.Picture.Length > 0)
+                        {
+
+                            var base64 = Convert.ToBase64String(Model.Picture);
+                            var imgSrc = String.Format("data:image;base64,{0}", base64);
+
+                            <img src="@imgSrc" class="image" style="max-height: 281.5px; max-width: 500px" />
+                        }
+
+                    }<br />
+                    <div class="custom-file">
+                        <input type="file" name="upload" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" />
+                        @Html.HiddenFor(m => m.Picture)
+                    </div>
+                    <br />
+
+                    @Html.HiddenFor(m => m.LodgeTypeId)
+                    <br />
+                    <input type="submit" style="border-radius: 40px; padding: 5px 40px; width: 100%;" class="btn btn-primary" value="Submit Changes" />
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
+                </div>
+                <div class="col-md-6" style="text-align: right">
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,186 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    background-color: #EEE;
+    z-index: -2;
+    padding-bottom: 250px;
+    overflow-x: hidden;
+}
+
+@font-face {
+    font-family: "Tahu";
+    src: url("/Content/fonts/Tahu_2.ttf");
+}
+
+#background {
+    z-index: -1;
+    top: 0;
+    left: 0;
+    position: fixed;
+    min-width: 100vw;
+    min-height: 100vh;
+    background-image: url("../Content/Images/Java.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    filter: blur(1.5px) brightness(80%) saturate(140%);
+    transition: all 0.2s ease-in-out;
+}
+
+
+.shadow-c {
+    -webkit-filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 0.306));
+    filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 0.306));
+}
+
+@media only screen and (max-width: 700px) {
+    nav ul {
+        display: none;
+        float: middle;
+        text-align: center;
+    }
+
+    nav ul li {
+        padding: 10px;
+    }
+    
+    nav ul li:first-child {
+        padding-top: 80px;
+    }
+    nav ul li a{
+        position : relative;
+        text-align:center;
+    }
+
+    nav .hamburger-m {
+        display: block;
+    }
+
+    nav ul:first-child {
+        position: relative;
+        margin: auto;
+        float: middle;
+        text-align: center;
+    }
+
+    nav ul:last-child {
+        float: right;
+        text-align: center;
+        margin-right: 20px;
+    }
+
+    nav li:active {
+        background-color: rgba(206, 206, 206, 0.734);
+    }
+}
+
+    @media only screen and (min-width: 450px) {
+        nav {
+            display: -ms-grid;
+            display: grid;
+            -ms-grid-columns: auto auto;
+            grid-template-columns: auto auto;
+        }
+
+            nav ul li {
+                float: left;
+                margin: 10px;
+                list-style: none;
+            }
+
+            nav ul:last-child li {
+                float: right;
+                margin-right: 20px;
+            }
+
+        .hamburger-m {
+            display: none;
+        }
+    }
+
+    nav {
+        position: relative;
+        top: 0;
+        width: 100%;
+
+    }
+
+        nav .nav-bg-m {
+            -webkit-transition: all 0.2s;
+            transition: all 0.2s;
+            position: relative;
+            top: 0;
+            padding-left:20px;
+            padding-right:20px;
+            background-color: white;
+            width: 100vw;
+            height: 80px;
+            -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 60%);
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 60%);
+        }
+
+        nav ul {
+            position: relative;
+            text-align: center;
+            list-style: none;
+            z-index: 1;
+        }
+
+        nav .hamburger-m {
+            position: relative;
+            float: right;
+            margin-right: 20px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            width: 40px;
+            z-index: 100;
+        }
+
+            nav .hamburger-m hr {
+                border: none;
+                background-color: black;
+                height: 7px;
+                margin: auto;
+                margin-top: 6px;
+            }
+
+            nav .hamburger-m:hover hr {
+                background-color: #535353;
+            }
+    /*# sourceMappingURL=style.css.map */
+    footer {
+        z-index: 100;
+        width: 100%;
+        height: 250px;
+        clear: both;
+        position: absolute;
+        bottom: 0;
+        background-color: #211f1c;
+        color: white;
+        display: block;
+        padding-left: 15%;
+        padding-top: 20px;
+    }
+
+
+        footer img {
+            width: 20px;
+        }
+
+        footer li {
+            height: 30px;
+        }
+
+    button.is-active:active {
+        border: none !important;
+        outline: none !important;
+    }

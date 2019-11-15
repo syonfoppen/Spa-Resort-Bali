@@ -1,0 +1,46 @@
+﻿@model Spa_Resort_bali.Models.AddLodgeViewModels
+@{
+    ViewBag.Title = "editlodge";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <style>
+        .card-body{
+            text-align:center;
+            
+        }
+        input{
+            margin: auto;
+            float: center;
+        }
+    </style>
+
+<div class="container">
+    @using (Html.BeginForm("EditLodgeapply", "Manager", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {
+
+    <div class="card" style="margin-top: 160px; margin-bottom: 100px">
+        <div class="card-body">
+            <h2 style="color:#007BFF">Edit Lodge: @Model.Code </h2>
+
+            <span class="control-label">disabled</span>
+            @Html.EditorFor(model => model.Disabled)<br /><br />
+
+            <div style="display:none;">@Html.AntiForgeryToken()</div>
+
+            <h6>Zipcode</h6>
+            @Html.TextBoxFor(m => m.PostCode, new { @class = "form-control" })<br />
+
+            <h6>Street</h6>
+            @Html.TextBoxFor(m => m.Streed, new { @class = "form-control" })<br />
+
+            @Html.LabelFor(m => m.HouseNumber, new { @class = " control-label" })
+            @Html.TextBoxFor(m => m.HouseNumber, new { @class = "form-control" })<br />
+
+            @Html.HiddenFor(m => m.AddresID)
+            @Html.HiddenFor(m => m.LodgeID)
+            <input type="submit" style="border-radius: 40px; padding: 5px 40px; width: 100%;" class="btn btn-primary" value="edit lodge" />
+        </div>
+    </div>
+
+    }
+</div>

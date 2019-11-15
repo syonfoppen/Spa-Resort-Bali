@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Confirm Email";
+}
+
+<div class="container">
+    <div class="card" style="margin-top: 160px; margin-bottom: 100px;">
+        <div class="card-body">
+            <div>
+                @if (Session["booking"] == null)
+                {
+                <p>
+                    Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in.", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                </p>
+                }
+                else
+                {
+                <p>
+                    Thank you for confirming your email. Please @Html.ActionLink("Click here to continue with your booking.", "index", "booking", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                </p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

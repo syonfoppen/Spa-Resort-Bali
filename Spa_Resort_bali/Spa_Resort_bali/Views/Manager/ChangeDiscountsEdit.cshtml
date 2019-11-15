@@ -1,0 +1,21 @@
+﻿@model Spa_Resort_bali.Models.Discounts
+@using System.Globalization
+
+<div class="container">
+    <div class="card" style="margin-top: 160px; margin-bottom: 100px;">
+        <div class="card-body">
+            <h2 style="color:#007BFF">Change Discount for @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Model.Month) / @Model.Year</h2>
+            <hr />
+            @using (Html.BeginForm("ChangeDiscountEditApply", "Manager", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+            <div style="display:none;">@Html.AntiForgeryToken()</div>
+            @Html.LabelFor(m => m.Discount, new { @class = " control-label" })
+            @Html.TextBoxFor(m => m.Discount, new { @class = "form-control", @Value = Model.Discount, Type = "number" })
+            @Html.HiddenFor(m => m.Month);
+            @Html.HiddenFor(m => m.Year);
+            <br />
+            <input class="btn btn-primary" style="border-radius: 40px;" type="submit" value="apply" />
+            }
+        </div>
+    </div>
+</div>
