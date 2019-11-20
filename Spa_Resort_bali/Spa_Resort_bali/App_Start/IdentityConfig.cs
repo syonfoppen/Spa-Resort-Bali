@@ -16,8 +16,8 @@ namespace Spa_Resort_bali
         public Task SendAsync(IdentityMessage message)
         {
             //email settings
-            GMailer.GmailUsername = "bitskill.projects@gmail.com";
-            GMailer.GmailPassword = "Henk123#";
+            GMailer.GmailUsername = "EMAIL";
+            GMailer.GmailPassword = "PASSWORD";
 
             GMailer mailer = new GMailer();
             mailer.ToEmail = message.Destination;
